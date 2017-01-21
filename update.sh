@@ -9,8 +9,9 @@ if [ ${#phpVersions[@]} -eq 0 ]; then
 fi
 phpVersions=( "${phpVersions[@]%/}" )
 
-current="$(curl -fsSL 'http://api.wordpress.org/core/version-check/1.7/' | jq -r '.offers[0].current')"
-sha1="$(curl -fsSL "https://wordpress.org/wordpress-$current.tar.gz.sha1")"
+current="4.7.1"
+sha1="04f9d2fcc9468536befb92b6f6275a8b094bee06"
+wordpressLang="ja"
 
 declare -A variantExtras=(
 	[apache]='\nRUN a2enmod rewrite expires\n'
@@ -47,6 +48,9 @@ for phpVersion in "${phpVersions[@]}"; do
 			sed -r \
 				-e 's!%%WORDPRESS_VERSION%%!'"$current"'!g' \
 				-e 's!%%WORDPRESS_SHA1%%!'"$sha1"'!g' \
+				-e 's!%%WORDPRESS_LANG%%!'"$wordpressLang"'!g' \
+				-e 's!%%WORDPRESS_SUBDOMAIN%%!'"${wordpressLang}."'!g' \
+				-e 's!%%WORDPRESS_SUFFIX%%!'"-${wordpressLang}"'!g' \
 				-e 's!%%PHP_VERSION%%!'"$phpVersion"'!g' \
 				-e 's!%%VARIANT%%!'"$variant"'!g' \
 				-e 's!%%VARIANT_EXTRAS%%!'"$extras"'!g' \
