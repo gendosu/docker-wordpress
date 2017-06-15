@@ -9,8 +9,8 @@ if [ ${#phpVersions[@]} -eq 0 ]; then
 fi
 phpVersions=( "${phpVersions[@]%/}" )
 
-current="4.7.5"
-sha1="0b4f8f044b50cc8487f17f1f0cd888516d717c49"
+current="4.8"
+sha1="b5990d2ff16221e739926332007d4c220a7bd815"
 wordpressLang="ja"
 
 declare -A variantExtras=(
